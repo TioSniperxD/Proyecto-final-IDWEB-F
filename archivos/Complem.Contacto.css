@@ -1,0 +1,179 @@
+.main-header {
+    background-color: orange;
+    color: black;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 50px;
+    justify-content: space-between;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo img{
+    height: 120px;
+    width: auto;
+    display: block;
+    justify-content: left;
+}
+
+
+.main-nav ul {
+    list-style: none;
+    display: flex; 
+}
+
+.main-nav ul li {
+    margin-left: 35px;
+}
+
+.main-nav ul li a {
+    text-transform: uppercase;
+    font-size: 30px;
+    font-weight: 500;
+    padding: 5px 0;
+    color: black;
+    transition: color 0.3s, 
+    border-bottom 0.3s;
+    text-decoration: none;
+}
+
+.main-nav ul li a.active,
+.main-nav ul li a:hover {
+    color: var(--hero-bg); /* Color de acento verde */
+    border-bottom: 3px solid var(--hero-bg);
+}
+
+@media (max-width: 850px) {
+    .main-header {
+        flex-direction: column; 
+        align-items: flex-start; 
+        padding: 15px 20px;
+    }
+    
+    .main-header .logo {
+        margin-bottom: 10px;
+    }
+
+    .main-nav {
+        width: 100%;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-nav ul li {
+        margin-left: 0; 
+        width: 100%;
+        text-align: left;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .main-nav ul li:last-child {
+        border-bottom: none;
+    }
+    
+    .main-nav ul li a {
+        display: block; 
+        padding: 10px 0;
+        border-bottom: none; 
+    }
+    
+    .main-nav ul li a:hover,
+    .main-nav ul li a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: black;
+    }
+}
+
+.contact-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 40px;
+    padding: 20px; 
+    margin-bottom: 40px;
+}
+
+/* Contenedor del Formulario y de la Información: mismo ancho */
+.contact-form-wrapper,
+.contact-info-wrapper {
+    /* Toma el 100% en móvil y el 50% menos el gap en escritorio */
+    flex: 1 1 calc(50% - 20px); 
+    background-color: black;
+    padding: 30px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(248, 253, 246, 0.767);
+    color: white;
+}
+
+.contact-form-wrapper h2,
+.contact-info-wrapper h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.95em;
+    color: white;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.btn-form {
+    width: 100%;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.info-item {
+    margin-bottom: 20px;
+}
+
+.info-item strong {
+    display: block;
+    color: var(--hero-bg); 
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.info-item p {
+    margin: 0;
+    color: whitesmoke;
+}
+
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .contact-form-wrapper,
+    .contact-info-wrapper {
+        /* Asegura que ocupen el 100% en móviles */
+        flex: 1 1 100%; 
+    }
+}
