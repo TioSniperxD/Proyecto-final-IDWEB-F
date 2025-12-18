@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../static/css/Complem.Pago.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header class="main-header">
         <div class="logo">
@@ -15,16 +17,16 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-    <li><a href="{{ url_for('productos') }}">Productos</a></li>
-    <li><a href="{{ url_for('nosotros   ') }}">Nosotros</a></li>
-    <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
-    
-    {% if current_user.is_authenticated %}
-        <li><a href="{{ url_for('tramitar_pago') }}" class="btn-nav">¡Lo Quiero!</a></li>
-        <li><a href="{{ url_for('logout') }}" style="font-size:0.8em; color:red;">(Salir)</a></li>
-    {% else %}
-        <li><a href="{{ url_for('login') }}" class="btn-nav">Iniciar Sesión</a></li>
-    {% endif %}
+                <li><a href="{{ url_for('productos') }}">Productos</a></li>
+                <li><a href="{{ url_for('nosotros') }}">Nosotros</a></li>
+                <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
+
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('tramitar_pago') }}" class="btn-nav">¡Lo Quiero!</a></li>
+                <li><a href="{{ url_for('logout') }}" style="font-size:0.8em; color:red;">(Salir)</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}" class="btn-nav">Iniciar Sesión</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -49,23 +51,23 @@
                 <div class="payment-details">
                     <h2>Datos de Envío y Pago</h2>
                     <form method="POST" action="{{ url_for('tramitar_pago') }}">
-                        <label>Nombre del Titular</label>   
-                        <input type="text" placeholder="Ej: Juan Pérez" required>
-                        
+                        <label>Nombre del Titular</label>
+                        <input type="text" name="nombre" placeholder="Ej: Juan Pérez" required>
+
                         <label>Dirección de Envío</label>
-                        <input type="text" placeholder="Calle, Número, Ciudad" required>
+                        <input type="text" name="direccion" placeholder="Calle, Número, Ciudad" required>
 
                         <label>Número de Tarjeta</label>
-                        <input type="text" placeholder="0000 0000 0000 0000" required>
+                        <input type="text" name="tarjeta" placeholder="0000 0000 0000 0000" required>
 
                         <div class="row">
                             <div>
                                 <label>Vencimiento</label>
-                                <input type="text" placeholder="MM/AA">
+                                <input type="text" name="vencimiento" placeholder="MM/AA">
                             </div>
                             <div>
                                 <label>CVV</label>
-                                <input type="text" placeholder="123">
+                                <input type="text" name="cvv" placeholder="123">
                             </div>
                         </div>
 
@@ -82,4 +84,5 @@
 
     <script src="../static/js/script.js"></script>
 </body>
+
 </html>

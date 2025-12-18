@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+import datetime
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '12345'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 db = SQLAlchemy(app)
 
 #Configuracion del login
@@ -13,12 +16,20 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 #Modelo de base de datos
-class User(UserMixin,db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
-    role = db.Column(db.String(50), default='user') # 'user' o 'admin'
-
+    role = db.Column(db.String(50), default='user')
+    # Relación: Un usuario puede tener muchas órdenes
+    ordenes = db.relationship('Orden', backref='comprador', lazy=True)
+class Orden(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_titular = db.Column(db.String(100), nullable=False)
+    direccion = db.Column(db.String(200), nullable=False)
+    tarjeta = db.Column(db.String(50), nullable=False)
+    fecha = db.Column(db.DateTime, default=datetime.datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 #Crear la base de datos
 with app.app_context():
     db.create_all()
@@ -86,10 +97,26 @@ def logout():
 @login_required
 def tramitar_pago():
     if request.method == 'POST':
-        # Aquí recibirías los datos del formulario final
+        # 1. Recibir los datos del formulario HTML
         nombre = request.form.get('nombre')
-        # Simulación de backend procesando compra
-        flash(f'¡Gracias {nombre}! Tu pedido ha sido procesado por el servidor.', 'success')
+        direccion = request.form.get('direccion')
+        tarjeta = request.form.get('tarjeta')
+        
+        # 2. Crear la nueva orden en la base de datos
+        nueva_orden = Orden(
+            nombre_titular=nombre,
+            direccion=direccion,
+            tarjeta=tarjeta,
+            user_id=current_user.id  # Guardamos el ID del usuario actual
+        )
+        
+        # 3. Guardar cambios
+        db.session.add(nueva_orden)
+        db.session.commit()
+        
+        # 4. Mensaje de éxito y redirección
+        flash(f'¡Pedido registrado exitosamente! Orden #{nueva_orden.id}', 'success')
+        print(f"✅ Nueva compra registrada: {nombre} - {direccion}") # Mensaje en consola para verificar
         return redirect(url_for('inicio'))
         
     return render_template('TramitarPago.html', nombre_usuario=current_user.username)

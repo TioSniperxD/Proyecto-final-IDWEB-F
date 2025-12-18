@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     alert("¡Pago Exitoso! Gracias por tu compra.");
                     localStorage.clear();
-                    window.location.href = "Inicio.html";
+                    botonPagar.disabled = false;
+                    formPago.submit(); 
                 }, 2000);
             }
         });
