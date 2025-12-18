@@ -30,6 +30,7 @@ class Orden(db.Model):
     tarjeta = db.Column(db.String(50), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    monto = db.Column(db.String(50), nullable=False, default='S/ 0.00')
 #Crear la base de datos
 with app.app_context():
     db.create_all()
@@ -101,12 +102,14 @@ def tramitar_pago():
         nombre = request.form.get('nombre')
         direccion = request.form.get('direccion')
         tarjeta = request.form.get('tarjeta')
+        monto = request.form.get('monto')
         
         # 2. Crear la nueva orden en la base de datos
         nueva_orden = Orden(
             nombre_titular=nombre,
             direccion=direccion,
             tarjeta=tarjeta,
+            monto=monto,
             user_id=current_user.id  # Guardamos el ID del usuario actual
         )
         
@@ -120,7 +123,6 @@ def tramitar_pago():
         return redirect(url_for('inicio'))
         
     return render_template('TramitarPago.html', nombre_usuario=current_user.username)
-
 # 3. Panel de Administración (Control de Roles)
 @app.route('/admin')
 @login_required
@@ -129,8 +131,84 @@ def admin_panel():
         flash('No tienes permiso para ver esta página', 'error')
         return redirect(url_for('inicio'))
     
-    users = User.query.all() # El admin puede ver todos los usuarios
-    return render_template('Admin.html', users=users) # Necesitarías crear un Admin.html simple o mostrar texto
+    users = User.query.all()
+    ordenes = Orden.query.all()
+    
+    # 🔴 CORRECCIÓN 1: Agregamos ordenes=ordenes para que se vean en la tabla
+    return render_template('Admin.html', users=users, ordenes=ordenes)
 
+# --- RUTA PARA ELIMINAR (Cumple con la D de CRUD) ---
+@app.route('/eliminar-orden/<int:id>')
+@login_required
+def eliminar_orden(id):
+    if current_user.role != 'admin':
+        flash('No tienes permiso para hacer esto.', 'error')
+        return redirect(url_for('inicio'))
+    
+    orden_a_borrar = Orden.query.get_or_404(id)
+    
+    try:
+        db.session.delete(orden_a_borrar)
+        db.session.commit()
+        flash('La orden ha sido eliminada correctamente.', 'success')
+    except:
+        flash('Hubo un error al intentar borrar la orden.', 'error')
+        
+    return redirect(url_for('admin_panel'))    
+
+@app.route('/eliminar-usuario/<int:id>')
+@login_required
+def eliminar_usuario(id):
+    # 1. Seguridad: Solo admin puede entrar aquí
+    if current_user.role != 'admin':
+        flash('No tienes permiso para hacer esto.', 'error')
+        return redirect(url_for('inicio'))
+
+    # 2. Seguridad: No puedes borrarte a ti mismo
+    if id == current_user.id:
+        flash('¡No puedes eliminar tu propia cuenta de administrador!', 'error')
+        return redirect(url_for('admin_panel'))
+
+    # 3. Buscar y borrar
+    usuario_a_borrar = User.query.get_or_404(id)
+    
+    try:
+        # (Opcional) Borrar sus órdenes primero para no dejar basura en la DB
+        Orden.query.filter_by(user_id=id).delete()
+        
+        # Borrar el usuario
+        db.session.delete(usuario_a_borrar)
+        db.session.commit()
+        flash(f'El usuario {usuario_a_borrar.username} ha sido eliminado.', 'success')
+    except:
+        flash('Hubo un error al intentar eliminar el usuario.', 'error')
+
+    return redirect(url_for('admin_panel'))
+# --- RUTA PARA EDITAR (Cumple con la U de CRUD) ---
+@app.route('/editar-usuario/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editar_usuario(id):
+    # 1. Seguridad: Solo el admin puede entrar
+    if current_user.role != 'admin':
+        flash('No tienes permiso.', 'error')
+        return redirect(url_for('inicio'))
+    
+    # 2. Buscar al usuario que queremos editar
+    usuario_a_editar = User.query.get_or_404(id)
+
+    # 3. Si le dimos al botón "Guardar" (Método POST)
+    if request.method == 'POST':
+        usuario_a_editar.username = request.form['username']
+        usuario_a_editar.role = request.form['role']
+        
+        try:
+            db.session.commit()
+            flash('Usuario actualizado correctamente.', 'success')
+            return redirect(url_for('admin_panel'))
+        except:
+            flash('Error al actualizar. Quizás el nombre ya existe.', 'error')
+
+    # 4. Si solo estamos entrando a la página (Método GET)
+    return render_template('EditarUsuario.html', user=usuario_a_editar)
 if __name__ == '__main__':
     app.run(debug=True)

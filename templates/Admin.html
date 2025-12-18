@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+    <h1>Panel de Administración</h1>
+    <a href="{{ url_for('inicio') }}" class="btn-back">← Volver al Inicio</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <h2>📦 Gestión de Pedidos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Monto</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orden in ordenes %}
+            <tr>
+                <td>#{{ orden.id }}</td>
+                <td>{{ orden.nombre_titular }}</td>
+                <td>{{ orden.direccion }}</td>
+                <td>{{ orden.monto }}</td>
+                <td>{{ orden.fecha.strftime('%d/%m/%Y %H:%M') }}</td>
+                <td>
+                    <a href="{{ url_for('eliminar_orden', id=orden.id) }}" class="btn-delete"
+                        onclick="return confirm('¿Estás seguro de borrar permanentemente este pedido?');">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center;">No hay pedidos registrados aún.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>👥 Usuarios Registrados</h2>
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>
+                    {% if user.role == 'admin' %}
+                    <span style="color:blue; font-weight:bold;">ADMIN</span>
+                    {% else %}
+                    Usuario
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('editar_usuario', id=user.id) }}" class="btn-edit">
+                        Editar
+                    </a>
+                    {% if user.id != current_user.id %}
+                    <a href="{{ url_for('eliminar_usuario', id=user.id) }}" class="btn-delete"
+                        onclick="return confirm('¿Estás seguro? Se borrará el usuario y todos sus pedidos.');">
+                        Eliminar
+                    </a>
+                    {% else %}
+                    <span style="color: gray; font-size: small;">(Tú)</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

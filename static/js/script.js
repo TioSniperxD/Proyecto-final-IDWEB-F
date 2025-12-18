@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resumenNombre = document.getElementById('resumen-nombre');
     const resumenPrecio = document.getElementById('resumen-precio');
     const resumenTotal = document.getElementById('resumen-total');
+    const inputMonto = document.getElementById('input-monto');
 
     if (resumenNombre && resumenPrecio && resumenTotal) {
         const nombreGuardado = localStorage.getItem('compraNombre');
@@ -55,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
             resumenNombre.innerText = nombreGuardado;
             resumenPrecio.innerText = precioGuardado;
             resumenTotal.innerText = precioGuardado;
+            if (inputMonto) {
+                inputMonto.value = precioGuardado;
+            }
         }
     }
 

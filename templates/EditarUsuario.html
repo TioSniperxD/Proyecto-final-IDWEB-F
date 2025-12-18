@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>✏️ Editar Usuario</h2>
+        
+        <form method="POST">
+            <label>Nombre de Usuario:</label>
+            <input type="text" name="username" value="{{ user.username }}" required>
+
+            <label>Rol (Permisos):</label>
+            <select name="role">
+                <option value="user" {% if user.role == 'user' %}selected{% endif %}>Usuario Normal</option>
+                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Administrador</option>
+            </select>
+
+            <button type="submit" class="btn-save">Guardar Cambios</button>
+        </form>
+        
+        <br>
+        <div style="text-align: center;">
+            <a href="{{ url_for('admin_panel') }}" class="btn-back" style="font-size: 0.9em;">Cancelar y volver</a>
+        </div>
+    </div>
+
+</body>
+</html>
