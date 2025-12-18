@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | Drawings Store</title>
-    <link rel="stylesheet" href="Complem.Inicio.css">
+    <link rel="stylesheet" href="../static/css/Complem.Inicio.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 </head>
 <body>
     <header class="main-header">
         <div class="logo">
-            <img src="../multimedia/logo Drawings Store.png.jpg" alt="Logo Drawings Store">
+            <img src="../static/multimedia/logo Drawings Store.png.jpg" alt="Logo Drawings Store">
         </div>
         <nav class="main-nav">
             <ul>
-                <li><a href="Inicio.html" class="active">Inicio</a></li>
-                <li><a href="Productos.html">Productos</a></li>
-                <li><a href="Nosotros.html">Nosotros</a></li>
-                <li><a href="Contacto.html">Contacto</a></li>
-                <li><a href="TramitarPAGO.html" class="btn-nav">¡Lo Quiero!</a></li>
+                <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+    <li><a href="{{ url_for('productos') }}">Productos</a></li>
+    <li><a href="{{ url_for('nosotros') }}">Nosotros</a></li>
+    <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
+    
+    {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('tramitar_pago') }}" class="btn-nav">¡Lo Quiero!</a></li>
+        <li><a href="{{ url_for('logout') }}" style="font-size:0.8em; color:red;">(Salir)</a></li>
+    {% else %}
+        <li><a href="{{ url_for('login') }}" class="btn-nav">Iniciar Sesión</a></li>
+    {% endif %}
             </ul>
         </nav>
     </header>
@@ -29,7 +35,7 @@
             <div class="hero-content">
                 <h1>Bienvenido a Drawings Store</h1>
                 <p>Tu universo de juguetes coleccionables, figuras de acción y más.</p>
-                <a href="Productos.html" class="btn-cta">Ver Catálogo</a>
+                <a href="{{ url_for('productos') }}" class="btn-cta">Ver Catálogo</a>
             </div>
         </section>
 
@@ -38,24 +44,24 @@
             <div class="slider-container">
                 <div class="slider">
                     <div class="slide">
-                        <img src="../multimedia/muñeco de accion jafettxMotta.jpg" alt="Jafett x Motta">
+                        <img src="../static/multimedia/muñeco de accion jafettxMotta.jpg" alt="Jafett x Motta">
                         <div class="slide-caption">
                             <h3>Jafett x Motta: Epic Battle</h3>
-                            <a href="TramitarPAGO.html" class="btn-comprar">COMPRAR AHORA</a>
+                            <a href="{{ url_for('tramitar_pago')}}" class="btn-comprar">COMPRAR AHORA</a>
                         </div>
                     </div>
                     <div class="slide">
-                        <img src="../multimedia/djins modo lego.jpg" alt="Djins Lego">
+                        <img src="../static/multimedia/djins modo lego.jpg" alt="Djins Lego">
                         <div class="slide-caption">
                             <h3>Colección Lego: Djins</h3>
-                            <a href="TramitarPAGO.html" class="btn-comprar">CONSTRUIR AHORA</a>
+                            <a href="{{ url_for('tramitar_pago')}}" class="btn-comprar">CONSTRUIR AHORA</a>
                         </div>
                     </div>
                     <div class="slide">
-                        <img src="../multimedia/djins modo muñeco cabezon.jpg" alt="Djins Funko">
+                        <img src="../static/multimedia/djins modo muñeco cabezon.jpg" alt="Djins Funko">
                         <div class="slide-caption">
                             <h3>Edición Cabezón Supremo</h3>
-                            <a href="TramitarPAGO.html" class="btn-comprar">ADQUIRIR YA</a>
+                            <a href="{{ url_for('tramitar_pago')}}" class="btn-comprar">ADQUIRIR YA</a>
                         </div>
                     </div>
                 </div>
@@ -67,6 +73,6 @@
         <p>&copy; 2025 Drawings Store. Todos los derechos reservados.</p>
     </footer>
     
-    <script src="script.js"></script>
+    <script src="../static/js/script.js"></script>
 </body>
 </html>

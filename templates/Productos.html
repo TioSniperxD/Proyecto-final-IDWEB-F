@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Drawings Store</title>
+    <link rel="stylesheet" href="../static/css/Complem.Productos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">
+            <img src="../static/multimedia/logo Drawings Store.png.jpg" alt="Logo Drawings Store">
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+    <li><a href="{{ url_for('productos') }}">Productos</a></li>
+    <li><a href="{{ url_for('nosotros') }}">Nosotros</a></li>
+    <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
+    
+    {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('tramitar_pago') }}" class="btn-nav">¡Lo Quiero!</a></li>
+        <li><a href="{{ url_for('logout') }}" style="font-size:0.8em; color:red;">(Salir)</a></li>
+    {% else %}
+        <li><a href="{{ url_for('login') }}" class="btn-nav">Iniciar Sesión</a></li>
+    {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-title">
+            <h1>Catálogo de Colección</h1>
+            <p>Elige tu favorito y llévalo a casa.</p>
+        </section>
+
+        <section class="products-grid">
+            <article class="product-card">
+                <div class="img-container">
+                    <img src="../static/multimedia/muñeco de accion jafettxMotta.jpg" alt="Jafett x Motta">
+                </div>
+                <div class="card-info">
+                    <h3>Pack: Jafett x Motta</h3>
+                    <p class="price">S/ 120.00</p>
+                    <p class="desc">Figura de acción edición limitada. Epic Battle series.</p>
+                    <a href="TramitarPAGO.html" class="btn-buy">Añadir al Carrito</a>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="img-container">
+                    <img src="../static/multimedia/djins modo lego.jpg" alt="Lego Djins">
+                </div>
+                <div class="card-info">
+                    <h3>Lego: Djins Collection</h3>
+                    <p class="price">S/ 85.90</p>
+                    <p class="desc">Construye tu propio Djins. Incluye 500 piezas.</p>
+                    <a href="TramitarPAGO.html" class="btn-buy">Añadir al Carrito</a>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="img-container">
+                    <img src="../static/multimedia/djins modo muñeco cabezon.jpg" alt="Funko Djins">
+                </div>
+                <div class="card-info">
+                    <h3>Funko Djins Supreme</h3>
+                    <p class="price">S/ 65.00</p>
+                    <p class="desc">El cabezón que falta en tu estantería. 100% vinilo.</p>
+                    <a href="TramitarPAGO.html" class="btn-buy">Añadir al Carrito</a>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="img-container">
+                    <img src="../static/multimedia/j0tar.jpg" alt="Figura Coleccionable j0tar">
+                </div>
+                <div class="card-info">
+                    <h3>j0tar18: Edición Limitada</h3>
+                    <p class="price">S/ 80.00</p>
+                    <p class="desc">La figura más esperada. Diseño exclusivo de j0tar con acabados premium. ¡Unidades limitadas!</p>
+                    <a href="TramitarPAGO.html" class="btn-buy">Añadir al Carrito</a>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="img-container">
+                    <img src="../static/multimedia/rolito.jpg" alt="Figura Rolito">
+                </div>
+                <div class="card-info">
+                    <h3>Rolito: Héroe de Camaná</h3>
+                    <p class="price">S/ 70.00</p>
+                    <p class="desc">De Camaná para el mundo. Llegó para quedarse. Cofundador de los Dibujitos. ¡Cómpralo ya!</p>
+                    <a href="TramitarPAGO.html" class="btn-buy">Añadir al Carrito</a>
+                </div>
+            </article>
+
+            <article class="product-card">
+                <div class="img-container">
+                    <img src="../static/multimedia/cenaDibujitos.jpg" alt="Figura Cena Dibujitos">
+                </div>
+                <div class="card-info">
+                    <h3>La Cena de los Dibujitos</h3>
+                    <p class="price">S/ 150.00</p>
+                    <p class="desc">El producto más preciado de nuestra tienda. La cena que ocurre cada fin de semestre y nadie se quiere perder. ¡Únete!</p>
+                    <a href="TramitarPAGO.html" class="btn-buy">Añadir al Carrito</a>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Drawings Store</p>
+    </footer>
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros | Drawings Store</title>
-    <link rel="stylesheet" href="Complem.Nosotros.css">
+    <link rel="stylesheet" href="../static/css/Complem.Nosotros.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="main-header">
         <div class="logo">
-            <img src="../multimedia/logo Drawings Store.png.jpg" alt="Logo Drawings Store">
+            <img src="../static/multimedia/logo Drawings Store.png.jpg" alt="Logo Drawings Store">
         </div>
         <nav class="main-nav">
             <ul>
-                <li><a href="Inicio.html">Inicio</a></li>
-                <li><a href="Productos.html">Productos</a></li>
-                <li><a href="Nosotros.html" class="active">Nosotros</a></li>
-                <li><a href="Contacto.html">Contacto</a></li>
-                <li><a href="TramitarPAGO.html" class="btn-nav">¡Lo Quiero!</a></li>
+                <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+    <li><a href="{{ url_for('productos') }}">Productos</a></li>
+    <li><a href="{{ url_for('nosotros') }}">Nosotros</a></li>
+    <li><a href="{{ url_for('contacto') }}">Contacto</a></li>
+    
+    {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('tramitar_pago') }}" class="btn-nav">¡Lo Quiero!</a></li>
+        <li><a href="{{ url_for('logout') }}" style="font-size:0.8em; color:red;">(Salir)</a></li>
+    {% else %}
+        <li><a href="{{ url_for('login') }}" class="btn-nav">Iniciar Sesión</a></li>
+    {% endif %}
             </ul>
         </nav>
     </header>
@@ -40,21 +46,21 @@
             <h2>Miembros Clave</h2>
             <div class="team-grid-container">
                 <article class="team-member-card">
-                    <img src="../multimedia/mi foto-flow.jpg" alt="Ronald">
+                    <img src="../static/multimedia/mi foto-flow.jpg" alt="Ronald">
                     <h3>Ronald Manrique</h3>
                     <p class="role">Frontend Developer</p>
                     <p>Especialista en interfaces de usuario atractivas.</p>
                 </article>
 
                 <article class="team-member-card">
-                    <img src="../multimedia/foto-perfil-Emerson.jpg" alt="Emerson">
+                    <img src="../static/multimedia/foto-perfil-Emerson.jpg" alt="Emerson">
                     <h3>Emerson Paredes</h3>
                     <p class="role">Logic Developer</p>
                     <p>Encargado de la lógica de negocio.</p>
                 </article>
 
                 <article class="team-member-card">
-                    <img src="../multimedia/foto-perfil-Ludeña.jpg" alt="Jose">
+                    <img src="../static/multimedia/foto-perfil-Ludeña.jpg" alt="Jose">
                     <h3>Jose Ludeña</h3>
                     <p class="role">Backend Developer</p>
                     <p>Asegura la robustez del servidor.</p>
@@ -67,6 +73,6 @@
         <p>&copy; 2025 Drawings Store</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="../static/js/script.js"></script>
 </body>
 </html>
