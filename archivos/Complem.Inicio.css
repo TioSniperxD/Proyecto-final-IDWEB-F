@@ -1,0 +1,93 @@
+:root {
+    --primary: #FF9F1C; /* Naranja vibrante */
+    --dark: #1F2421;    /* Negro suave */
+    --light: #F4F7F6;   /* Gris muy claro */
+    --white: #FFFFFF;
+    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background-color: var(--light); color: var(--dark); line-height: 1.6; }
+a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+ul { list-style: none; }
+
+/* --- Header Moderno --- */
+.main-header {
+    background-color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.logo img { height: 60px; }
+.main-nav ul { display: flex; gap: 30px; align-items: center; }
+.main-nav a { font-weight: 600; font-size: 0.95rem; color: var(--dark); position: relative; }
+.main-nav a::after {
+    content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+    background-color: var(--primary); transition: width 0.3s;
+}
+.main-nav a:hover::after, .main-nav a.active::after { width: 100%; }
+.btn-nav {
+    background: var(--primary); color: white !important; padding: 10px 25px;
+    border-radius: 50px; box-shadow: 0 4px 15px rgba(255, 159, 28, 0.4);
+}
+.btn-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 159, 28, 0.6); }
+
+/* --- Hero Section --- */
+.hero {
+    background: linear-gradient(135deg, rgba(31,36,33,0.9), rgba(31,36,33,0.7)), url('../multimedia/muñeco de accion jafettxMotta.jpg');
+    background-size: cover; background-position: center; background-attachment: fixed;
+    height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+}
+.hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 1px; }
+.hero p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+.btn-cta {
+    background: var(--primary); color: white; padding: 15px 40px; border-radius: 50px;
+    font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: var(--shadow);
+}
+.btn-cta:hover { background: #ffb042; transform: scale(1.05); }
+
+/* --- Slider Moderno --- */
+.featured-slider { padding: 80px 10%; background: var(--white); text-align: center; }
+.featured-slider h2 { font-size: 2.5rem; margin-bottom: 40px; position: relative; display: inline-block; }
+.featured-slider h2::after {
+    content: ''; display: block; width: 50px; height: 4px; background: var(--primary);
+    margin: 10px auto 0; border-radius: 2px;
+}
+.slider-container {
+    width: 100%; max-width: 1000px; height: 500px; margin: 0 auto; overflow: hidden;
+    border-radius: 20px; box-shadow: var(--shadow); position: relative;
+}
+.slider { display: flex; width: 300%; height: 100%; animation: slide 18s infinite cubic-bezier(0.4, 0, 0.2, 1); }
+.slide { width: 33.33%; position: relative; }
+.slide img { width: 100%; height: 100%; object-fit: cover; }
+.slide-caption {
+    position: absolute; bottom: 30px; left: 30px; right: 30px;
+    background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.slide-caption h3 { font-size: 1.5rem; color: var(--dark); margin: 0; }
+.btn-comprar {
+    background: var(--dark); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600;
+}
+
+@keyframes slide {
+    0%, 25% { transform: translateX(0); }
+    33%, 58% { transform: translateX(-33.33%); }
+    66%, 91% { transform: translateX(-66.66%); }
+}
+
+footer { background: var(--dark); color: white; text-align: center; padding: 30px; margin-top: auto; font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+    .main-header { flex-direction: column; gap: 15px; }
+    .main-nav ul { flex-direction: column; gap: 15px; }
+    .hero h1 { font-size: 2.2rem; }
+    .slide-caption { flex-direction: column; gap: 10px; text-align: center; }
+}
