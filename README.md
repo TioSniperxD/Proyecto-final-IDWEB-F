@@ -82,7 +82,7 @@ Inicia la aplicación con el siguiente comando:
 python app.py
 
 5. Acceso
-Abre tu navegador web e ingresa a: 👉 https://www.google.com/search?q=http://127.0.0.1:5000
+Abre tu navegador web e ingresa a: 👉 http://127.0.0.1:8107/webapp
 
 🔑 Credenciales de Acceso (Admin)
 Para acceder al Panel de Administración y probar las funciones CRUD:
